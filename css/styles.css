@@ -197,7 +197,7 @@ img {
   }
 
   .site-nav.is-open {
-    max-height: 420px;
+    max-height: 480px;
   }
 
   .site-nav ul {
@@ -248,16 +248,20 @@ img {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(165deg, rgba(28, 28, 28, 0.15) 0%, rgba(28, 28, 28, 0.88) 55%, var(--color-asphalt) 100%),
+  background-color: var(--color-asphalt);
+  background-image:
+    linear-gradient(165deg, rgba(28, 28, 28, 0.42) 0%, rgba(28, 28, 28, 0.82) 45%, var(--color-asphalt) 100%),
     repeating-linear-gradient(
       -12deg,
       transparent,
       transparent 2px,
-      rgba(0, 0, 0, 0.04) 2px,
-      rgba(0, 0, 0, 0.04) 4px
+      rgba(0, 0, 0, 0.05) 2px,
+      rgba(0, 0, 0, 0.05) 4px
     ),
-    linear-gradient(120deg, #252525 0%, #1a1a1a 45%, #151515 100%);
+    url("https://images.unsplash.com/photo-1646881478375-2a40ff90b803?auto=format&fit=crop&w=1920&q=75");
+  background-size: auto, auto, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat;
   z-index: 0;
 }
 
@@ -428,6 +432,50 @@ img {
   margin: 0;
   color: var(--color-muted);
   font-size: 1rem;
+}
+
+/* Gallery (stock imagery) */
+
+.gallery {
+  background: var(--color-white);
+  border-top: 1px solid rgba(28, 28, 28, 0.06);
+}
+
+.gallery-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-card {
+  margin: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-cream);
+  border: 1px solid rgba(28, 28, 28, 0.08);
+  box-shadow: 0 6px 28px rgba(28, 28, 28, 0.07);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-card figcaption {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.85rem 1rem;
+  color: var(--color-asphalt-soft);
+  border-top: 1px solid rgba(28, 28, 28, 0.06);
 }
 
 .process {
@@ -760,4 +808,26 @@ img {
 
 .footer-copy {
   margin: 0;
+}
+
+.photo-credits {
+  flex-basis: 100%;
+  order: 3;
+  margin: 0;
+  padding-top: 0.25rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.42);
+  max-width: 42rem;
+}
+
+.photo-credits a {
+  color: rgba(255, 255, 255, 0.68);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.photo-credits a:hover,
+.photo-credits a:focus-visible {
+  color: var(--color-accent);
 }
