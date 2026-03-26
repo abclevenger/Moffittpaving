@@ -117,6 +117,7 @@
       </button>
       <nav id="site-nav" class="site-nav" aria-label="Primary">
         <ul>
+          <li class="nav-phone"><a href="tel:+15555551234" class="nav-phone-link">Call (555) 555-1234</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#process">How We Work</a></li>
@@ -321,7 +322,8 @@
         <div>
           <header class="section-header align-left">
             <h2>Get your free estimate</h2>
-            <p>Tell us a little about the job—we’ll follow up quickly.</p>
+            <p>Tell us a little about the job. We usually respond within one business day—sooner when we’re in the office.</p>
+            <p class="contact-preference">Prefer to talk? Call <a href="tel:+15555551234">(555) 555-1234</a>—we’re happy to answer questions before you send anything.</p>
           </header>
           <ul class="contact-list">
             <li>
@@ -343,13 +345,24 @@
           </ul>
         </div>
         <form class="contact-form" action="#" method="post">
+          <div id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></div>
           <label>
             <span>Name</span>
-            <input type="text" name="name" autocomplete="name" required />
+            <input type="text" name="name" id="contact-name" autocomplete="name" required />
           </label>
           <label>
             <span>Phone or email</span>
-            <input type="text" name="contact" autocomplete="tel" required />
+            <input
+              type="text"
+              name="contact"
+              id="contact-reach"
+              autocomplete="tel"
+              inputmode="text"
+              required
+              placeholder="(555) 555-1234 or your@email.com"
+              aria-describedby="contact-reach-hint"
+            />
+            <span id="contact-reach-hint" class="field-hint">We’ll use this to get back to you—whichever you check most often.</span>
           </label>
           <label>
             <span>Project type</span>
@@ -365,10 +378,13 @@
           </label>
           <label>
             <span>Message</span>
-            <textarea name="message" rows="4" placeholder="Approx. size, address or area, timeline…"></textarea>
+            <textarea name="message" id="contact-message" rows="4" placeholder="Approx. size, property address or area, best time to reach you…"></textarea>
           </label>
-          <button type="submit" class="btn btn-primary btn-block">Send request</button>
-          <p class="form-note">This form is for demo layout only—hook it to email, a form service, or your CRM before launch.</p>
+          <p class="form-hp-wrap" aria-hidden="true">
+            <label>Company <input type="text" name="company" tabindex="-1" autocomplete="off" class="form-hp" /></label>
+          </p>
+          <button type="submit" class="btn btn-primary btn-block" id="contact-submit">Send request</button>
+          <p class="form-note">Not sent yet? This form is still in demo mode—connect it to your email or form service before launch. Call works anytime.</p>
         </form>
       </div>
     </section>
@@ -390,6 +406,11 @@
       </p>
     </div>
   </footer>
+
+  <div class="mobile-cta-bar" role="navigation" aria-label="Quick contact">
+    <a href="tel:+15555551234" class="btn btn-primary mobile-cta-btn">Call now</a>
+    <a href="#contact" class="btn btn-ghost mobile-cta-btn">Free estimate</a>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
