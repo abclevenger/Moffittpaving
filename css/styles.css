@@ -1,4 +1,4 @@
-/* Moffitt Paving — site styles */
+/* Premier Paving & Excavating — site styles */
 
 :root {
   --color-asphalt: #1c1c1c;
@@ -12,7 +12,7 @@
   --font-body: "Source Sans 3", system-ui, sans-serif;
   --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.25);
   --radius: 10px;
-  --header-h: 4.25rem;
+  --header-h: 4.55rem;
   --ease: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
@@ -90,17 +90,37 @@ img {
 }
 
 .logo {
+  color: var(--color-white);
+  text-decoration: none;
+  line-height: 1.05;
+}
+
+.logo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+}
+
+.logo-primary {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: clamp(1.05rem, 3.2vw, 1.3rem);
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-white);
-  text-decoration: none;
 }
 
-.logo span {
+.logo-accent {
   color: var(--color-accent);
+}
+
+.logo-secondary {
+  font-family: var(--font-display);
+  font-size: clamp(0.56rem, 2.3vw, 0.7rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .nav-toggle {
