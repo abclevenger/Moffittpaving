@@ -639,9 +639,15 @@ img {
 .footer-inner {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.25rem;
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 .footer-brand {
@@ -650,6 +656,19 @@ img {
 
 .footer-brand strong {
   color: var(--color-white);
+}
+
+.footer-address {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 26rem;
+}
+
+.contact-list a.contact-address {
+  font-size: 1.05rem;
+  line-height: 1.5;
 }
 
 .footer-copy {
