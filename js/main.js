@@ -49,6 +49,16 @@
 
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");
+  var mqMobile = window.matchMedia("(max-width: 768px)");
+
+  function syncNavTabindex() {
+    if (!nav) return;
+    var open = nav.classList.contains("is-open");
+    var mobile = mqMobile.matches;
+    nav.querySelectorAll("a").forEach(function (a) {
+      a.tabIndex = mobile && !open ? -1 : 0;
+    });
+  }
 
   function setMenuOpen(open) {
     if (!toggle || !nav) return;
@@ -56,6 +66,15 @@
     toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     nav.classList.toggle("is-open", open);
     document.body.classList.toggle("nav-open", open);
+    syncNavTabindex();
+    if (mqMobile.matches) {
+      if (open) {
+        var first = nav.querySelector("a");
+        if (first) window.requestAnimationFrame(function () { first.focus(); });
+      } else {
+        toggle.focus();
+      }
+    }
   }
 
   if (toggle && nav) {
@@ -66,13 +85,43 @@
 
     nav.querySelectorAll("a[href^='#']").forEach(function (link) {
       link.addEventListener("click", function () {
-        if (window.matchMedia("(max-width: 768px)").matches) setMenuOpen(false);
+        if (mqMobile.matches) setMenuOpen(false);
       });
     });
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") setMenuOpen(false);
     });
+
+    document.addEventListener(
+      "keydown",
+      function (e) {
+        if (e.key !== "Tab" || !nav.classList.contains("is-open") || !mqMobile.matches) return;
+        var links = nav.querySelectorAll("a");
+        if (!links.length) return;
+        var first = links[0];
+        var last = links[links.length - 1];
+        if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          toggle.focus();
+        }
+      },
+      true
+    );
+
+    function onMqChange() {
+      syncNavTabindex();
+      if (!mqMobile.matches) setMenuOpen(false);
+    }
+    if (mqMobile.addEventListener) {
+      mqMobile.addEventListener("change", onMqChange);
+    } else if (mqMobile.addListener) {
+      mqMobile.addListener(onMqChange);
+    }
+    syncNavTabindex();
   }
 
   document.querySelectorAll(".faq-item").forEach(function (details) {
@@ -81,6 +130,32 @@
       document.querySelectorAll(".faq-item").forEach(function (other) {
         if (other !== details) other.open = false;
       });
+    });
+  });
+
+  var toastEl = document.getElementById("toast-announcer");
+  document.querySelectorAll(".copy-phone-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var text = btn.getAttribute("data-copy") || "";
+      function announce(msg) {
+        if (toastEl) toastEl.textContent = msg;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () {
+            announce("Phone number copied to clipboard.");
+            btn.textContent = "Copied!";
+            window.setTimeout(function () {
+              btn.textContent = "Copy";
+            }, 2000);
+          },
+          function () {
+            announce("Could not copy—try selecting the number or dialing from the link.");
+          }
+        );
+      } else {
+        announce("Copy not supported—try selecting the number or dialing from the link.");
+      }
     });
   });
 
@@ -104,6 +179,7 @@
       e.preventDefault();
 
       if (!form.checkValidity()) {
+        form.classList.add("contact-form--attempted");
         form.reportValidity();
         statusEl.textContent = "";
         statusEl.innerHTML = "";
@@ -111,10 +187,13 @@
         return;
       }
 
+      form.classList.remove("contact-form--attempted");
+
       var hp = form.querySelector(".form-hp");
       if (hp && hp.value) {
         statusEl.textContent = "Thanks—we’ll be in touch.";
         statusEl.className = "form-status form-status--success";
+        form.classList.remove("contact-form--attempted");
         form.reset();
         setSubmitLoading(false);
         return;
