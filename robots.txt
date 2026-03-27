@@ -1,0 +1,5 @@
+# https://abclevenger.github.io/Moffittpaving/
+User-agent: *
+Allow: /
+
+Sitemap: https://abclevenger.github.io/Moffittpaving/sitemap.xml
